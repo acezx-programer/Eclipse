@@ -1,12 +1,6 @@
---[[
-    EzAimbot apart of EzLibrary
-    Developed by ToddDev
-    Skid to your hearts content. That's what it's meant for!
-]]--
-
 --// Container
 
-local EzAimbot = {}
+local Aimbot = {}
 
 --// Internal
 
@@ -24,13 +18,13 @@ local InputService = game:GetService("UserInputService")
 local MousePosition = function()
     return Vector2.new(Mouse.X,Mouse.Y)
 end
-local NotObstructing = function(destination, ignore) -- Rewrote by Stefanuk12
+local NotObstructing = function(destination, ignore)
     local Origin = workspace.CurrentCamera.CFrame.p
     local CheckRay = Ray.new(Origin, destination- Origin)
     local Hit = workspace:FindPartOnRayWithIgnoreList(CheckRay, ignore)
     return Hit == nil
 end
-local ClosestPlayer = function(friendlyfire) -- Most of this stuff was ripped right out of my upcoming hub
+local ClosestPlayer = function(friendlyfire)
     local MousePos = MousePosition()
     local Radius = FOV.Radius
     local Closest = math.huge
@@ -75,7 +69,7 @@ end
 
 --// Main functions
 
-EzAimbot.Disable = function()
+Aimbot.Disable = function()
     if MainLoop then
         MainLoop:Disconnect()
         MainLoop = nil
@@ -86,17 +80,17 @@ EzAimbot.Disable = function()
     RefreshInternals()
 end
 
-EzAimbot.Enable = function(showfov,fovconfig,key,friendlyfire)
-    assert(typeof(showfov)=="boolean","EzAimbot.Enable | Expected Boolean as argument #1")
-    assert(typeof(fovconfig)=="table","EzAimbot.Enable | Expected Table as argument #2")
-    assert(fovconfig["Size"],"EzAimbot.Enable | Expected Size in argument #2")
-    assert(fovconfig["Sides"],"EzAimbot.Enable | Expected Sides in argument #2")
-    assert(fovconfig["Color"],"EzAimbot.Enable | Expected Color in argument #2")
-    assert(type(fovconfig["Size"])=="number","EzAimbot.Enable | Expected Size in argument #2")
-    assert(type(fovconfig["Sides"])=="number","EzAimbot.Enable | Expected Sides in argument #2")
-    assert(typeof(fovconfig["Color"])=="Color3","EzAimbot.Enable | Expected Color in argument #2")
-    assert(type(key)=="string","EzAimbot.Enable | Expected String as argument #3")
-    assert(type(friendlyfire)=="boolean","EzAimbot.Enable | Expected Boolean as argument #4")
+Aimbot.Enable = function(showfov,fovconfig,key,friendlyfire)
+    assert(typeof(showfov)=="boolean","Aimbot.Enable | Expected Boolean as argument #1")
+    assert(typeof(fovconfig)=="table","Aimbot.Enable | Expected Table as argument #2")
+    assert(fovconfig["Size"],"Aimbot.Enable | Expected Size in argument #2")
+    assert(fovconfig["Sides"],"Aimbot.Enable | Expected Sides in argument #2")
+    assert(fovconfig["Color"],"Aimbot.Enable | Expected Color in argument #2")
+    assert(type(fovconfig["Size"])=="number","Aimbot.Enable | Expected Size in argument #2")
+    assert(type(fovconfig["Sides"])=="number","Aimbot.Enable | Expected Sides in argument #2")
+    assert(typeof(fovconfig["Color"])=="Color3","Aimbot.Enable | Expected Color in argument #2")
+    assert(type(key)=="string","Aimbot.Enable | Expected String as argument #3")
+    assert(type(friendlyfire)=="boolean","Aimbot.Enable | Expected Boolean as argument #4")
     local Size = fovconfig["Size"]
     local Sides = fovconfig["Sides"]
     local Color = fovconfig["Color"]
@@ -115,7 +109,7 @@ EzAimbot.Enable = function(showfov,fovconfig,key,friendlyfire)
         if FOV then
             FOV.Position = MousePosition()
         end
-        if InputService:IsKeyDown(Enum.KeyCode[key]) then
+        if InputService:IsKeyDown(Enum.UserInputType.MouseButton1) then
             local ClosestPlayer = ClosestPlayer(friendlyfire)
             if ClosestPlayer then
                 Camera.CFrame = CFrame.new(Camera.CFrame.p,ClosestPlayer.Character.Head.CFrame.p)
@@ -125,4 +119,4 @@ EzAimbot.Enable = function(showfov,fovconfig,key,friendlyfire)
     end)
 end
 
-return EzAimbot
+return Aimbot
