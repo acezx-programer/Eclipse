@@ -109,13 +109,15 @@ Aimbot.Enable = function(showfov,fovconfig,key,friendlyfire)
         if FOV then
             FOV.Position = MousePosition()
         end
-        if InputService:IsKeyDown(Enum.UserInputType.MouseButton1) then
-            local ClosestPlayer = ClosestPlayer(friendlyfire)
-            if ClosestPlayer then
-                Camera.CFrame = CFrame.new(Camera.CFrame.p,ClosestPlayer.Character.Head.CFrame.p)
+        UserInputService.InputBegan:Connect(function(input, gameProccesedEvent)
+            if input.UserInputType == Enum.UserInputType.MouseButton1 then
+                local ClosestPlayer = ClosestPlayer(friendlyfire)
+                if ClosestPlayer then
+                    Camera.CFrame = CFrame.new(Camera.CFrame.p,ClosestPlayer.Character.Head.CFrame.p)
+                end
+                RefreshInternals()
             end
-            RefreshInternals()
-        end
+        end)
     end)
 end
 
